@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import Home from "./screens/Home/Home";
+import Movies from "./screens/Movies/Movies";
+import Detail from "./screens/Detail/Detail";
+import NotFound from "./screens/NotFound/NotFound";
+import { Switch, Route } from "react-router-dom";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <React.Fragment>
+            <Header title="UdeSA Movies" />
+            <Switch>
+                <Route path="/" exact={true} component={Home} />
+                <Route path="/movies" component={Movies} />
+                <Route path="/detail/:type/:id" component={Detail} />
+                <Route path="*" component={NotFound} />
+            </Switch>
+            <Footer />
+        </React.Fragment>
+    );
 }
 
 export default App;

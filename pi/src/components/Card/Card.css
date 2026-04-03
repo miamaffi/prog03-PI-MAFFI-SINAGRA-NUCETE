@@ -1,0 +1,55 @@
+.cards {
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2%;
+}
+
+.cardBody {
+    margin-top: 20px;
+}
+
+.single-card-people {
+    width: 19%;
+}
+
+.single-card-movie {
+    width: 24%;
+}
+
+.single-card-playing {
+    width: 15%;
+}
+
+#now-playing .card-text {
+    height: 100px;
+    overflow: hidden;
+}
+
+.single-card-tv {
+    width: 19%;
+}
+
+.tv-show .card-text {
+    height: 100px;
+    overflow: hidden;
+}
+
+.single-card-on-air {
+    width: 15%;
+}
+
+#on-air-today .card-text {
+    height: 100px;
+    overflow: hidden;
+}
+
+.all-movies .single-card-movie {
+    width: 15%;
+}
+
+.oculta {
+    display: none;
+}
