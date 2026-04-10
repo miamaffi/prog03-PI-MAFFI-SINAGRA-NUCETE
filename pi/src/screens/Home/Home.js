@@ -7,36 +7,37 @@ class Home extends Component {
         super(props);
         this.state = {
             popularMovies: [],
-            nowPlayingMovies: [],
+            popularShows: [],       
             loading: true,
-            searchData: ""
+            searchData: "",
         };
     }
 
     componentDidMount() {
         const apiKey = "07331310659d2393d5664c23ad6370d3";
 
-        // Hago las 2 consultas al mismo tiempo con Promise.all
+        // Hago las 3 consultas al mismo tiempo con Promise.all
         Promise.all([
             fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=es-ES&page=1`)
                 .then(res => res.json()),
-            fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=es-ES&page=1`)
+            fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}&language=es-ES&page=1`)   // ← endpoint de series
                 .then(res => res.json())
         ])
-            .then(([popularData, nowPlayingData]) => {
-                // Agrego el type para saber a qué endpoint ir en el detalle
-                let populares = popularData.results.slice(0, 4).map(movie => {
+            .then(([popularData, showsData]) => {
+                // Agrego el type "movie" para saber a qué endpoint ir en el detalle
+                let populares = popularData.results.filter((movie, index) => index <4).map(movie => {
                     movie.type = "movie";
                     return movie;
                 });
-                let cartel = nowPlayingData.results.slice(0, 4).map(movie => {
-                    movie.type = "movie";
-                    return movie;
+                // Agrego el type "tv" para las series
+                let series = showsData.results.filter((show, index) => index <4).map(show => {
+                    show.type = "tv";
+                    return show;
                 });
 
                 this.setState({
                     popularMovies: populares,
-                    nowPlayingMovies: cartel,
+                    popularShows: series,    // guardo las series en el estado
                     loading: false
                 });
             })
@@ -49,17 +50,19 @@ class Home extends Component {
 
     evitarSubmit(event) {
         event.preventDefault();
-        console.log("Búsqueda:", this.state.searchData);
+        // navego la pagina de resultados, le paso el texto por la url
+        this.props.history.push("/search/" + this.state.searchData);
     }
+
 
     render() {
         return (
             <>
-                {/* Buscador en el cuerpo, no en el header - punto 3 consigna */}
+                {/* Buscador en el cuerpo, no en el header - punto 3  */}
                 <form className="search-form" onSubmit={(event) => this.evitarSubmit(event)}>
                     <input
                         type="text"
-                        placeholder="Buscar películas..."
+                        placeholder="Buscar películas o series..."
                         value={this.state.searchData}
                         onChange={(event) => this.controlarInput(event)}
                     />
@@ -81,13 +84,15 @@ class Home extends Component {
                             link="/movies"
                             data={this.state.popularMovies}
                         />
+                    
+                        {/* Segundo grupo: series - viene de un endpoint diferente */}
                         <CardsSection
-                            title="En cartel ahora"
+                            title="Series populares"
                             titleClass="alert alert-primary"
-                            idSection="now-playing"
-                            cardClass="single-card-playing"
-                            link="/now-playing"
-                            data={this.state.nowPlayingMovies}
+                            idSection="tv-shows"
+                            cardClass="single-card-tv"
+                            link="/series"
+                            data={this.state.popularShows}
                         />
                     </>
                 )}
@@ -95,5 +100,4 @@ class Home extends Component {
         );
     }
 }
-
 export default Home;
