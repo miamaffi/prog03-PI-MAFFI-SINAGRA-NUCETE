@@ -10,6 +10,7 @@ class Home extends Component {
             popularShows: [],       
             loading: true,
             searchData: "",
+            type:''
         };
     }
 
@@ -51,7 +52,7 @@ class Home extends Component {
     evitarSubmit(event) {
         event.preventDefault();
         // navego la pagina de resultados, le paso el texto por la url
-        this.props.history.push("/search/" + this.state.searchData);
+        this.props.history.push("/search/"+this.state.type + "/" + this.state.searchData);
     }
 
 
@@ -66,6 +67,10 @@ class Home extends Component {
                         value={this.state.searchData}
                         onChange={(event) => this.controlarInput(event)}
                     />
+                    <input type="radio" onChange={(event) => this.setState({type: event.target.value})} name="seleccion" value='movie' />
+                    <label>Peliculas</label>
+                    <input type="radio" onChange={(event) => this.setState({type: event.target.value})} name="seleccion" value='tv' />
+                    <label>Series</label>
                     <button type="submit" className="btn btn-success btn-sm">
                         Buscar
                     </button>

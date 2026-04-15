@@ -78,6 +78,7 @@ class Movies extends Component {
                                     key={movie.id + index}
                                     data={movie}
                                     cardClass="single-card-movie"
+                                    type = "movie"
                                 />
                             ))}
                         </section>

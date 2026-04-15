@@ -22,8 +22,8 @@ class Card extends Component {
     }
 
     toggleDescripcion() {
-        this.setState({
-            mostrarDescripcion: !this.state.mostrarDescripcion
+        this.setState({ 
+            mostrarDescripcion: !this.state.mostrarDescripcion /* !cambiá el valor al contrario */
         });
     }
 
@@ -54,7 +54,9 @@ class Card extends Component {
     }
 
     render() {
-        let { id, title, name, overview, poster_path, type } = this.props.data;
+console.log(this.props.data);
+
+        let { id, title, name, overview, poster_path } = this.props.data;
         let nombre = title || name;
 
         return (
@@ -79,7 +81,7 @@ class Card extends Component {
                         {overview}
                     </p>
 
-                    <Link to={`/detail/${type}/${id}`} className="btn btn-primary mr-2">
+                    <Link to={`/detail/${this.props.type}/${id}`} className="btn btn-primary mr-2">
                         Ir al detalle
                     </Link>
 

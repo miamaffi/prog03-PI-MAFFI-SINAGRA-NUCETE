@@ -19,7 +19,7 @@ function App() {
                 <Route path="/movies" component={Movies} />
                 <Route path="/detail/:type/:id" component={Detail} />
                 <Route path="/series" component={TVShows} />
-                <Route path="/search/:query" component={Search} />
+                <Route path="/search/:type/:query" component={Search} />
                 <Route path="/favorites" component={Favorites} />
                 <Route path="*" component={NotFound} />
             </Switch>

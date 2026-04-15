@@ -76,6 +76,7 @@ class TVShows extends Component {
                                     key={show.id + index}
                                     data={show}
                                     cardClass="single-card-tv"
+                                    type = "tv"
                                 />
                             ))}
                         </section>

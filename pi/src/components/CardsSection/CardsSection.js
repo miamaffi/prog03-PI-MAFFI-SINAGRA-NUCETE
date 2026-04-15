@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Card from "../Card/Card";
+import Card from "../Card/Card"; 
 import "./CardsSection.css";
 
 class CardsSection extends Component {
@@ -10,11 +10,13 @@ class CardsSection extends Component {
                 <h2 className={this.props.titleClass}>{this.props.title}</h2>
 
                 <section className="cards" id={this.props.idSection}>
-                    {this.props.data.map((item, index) => (
+                    {this.props.data.map(
+                        (item, index) => (
                         <Card
                             key={item.id + index}
                             data={item}
                             cardClass={this.props.cardClass}
+                            type = {this.props.idSection =="movies" ? "movie" : "tv"}
                         />
                     ))}
                 </section>

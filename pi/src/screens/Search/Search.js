@@ -16,9 +16,10 @@ class Search extends Component {
 
         // Tomo el query de la URL, igual que en Detail tomamos el id
         const query = this.props.match.params.query;
+        const type = this.props.match.params.type;
 
         // El endpoint de búsqueda de películas de TMDB
-        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=es-ES&query=${query}`)
+        fetch(`https://api.themoviedb.org/3/search/${type}?api_key=${apiKey}&language=es-ES&query=${query}`)
             .then(res => res.json())
             .then(data => {
                 // Agrego el type para que el link al detalle funcione
@@ -48,6 +49,7 @@ class Search extends Component {
                                 key={movie.id + index}
                                 data={movie}
                                 cardClass="single-card-movie"
+                                type={this.props.match.params.type}
                             />
                         ))}
                     </section>
