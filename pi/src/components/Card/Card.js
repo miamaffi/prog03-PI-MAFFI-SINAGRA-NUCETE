@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Card.css";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 class Card extends Component {
     constructor(props) {
@@ -54,11 +57,8 @@ class Card extends Component {
     }
 
     render() {
-console.log(this.props.data);
-
         let { id, title, name, overview, poster_path } = this.props.data;
         let nombre = title || name;
-
         return (
             <article className={this.props.cardClass}>
                 <img
@@ -81,27 +81,19 @@ console.log(this.props.data);
                         {overview}
                     </p>
 
-                    <Link to={`/detail/${this.props.type}/${id}`} className="btn btn-primary mr-2">
+                    <Link to={`/detail/${this.props.data.type}/${id}`} className="btn btn-primary mr-2">
                         Ir al detalle
                     </Link>
 
                     {/* El botón de favoritos solo aparece si existe la cookie de sesión */}
-                    {document.cookie.includes("sesion=") ? (
-                        this.state.esFavorito ? (
-                            <button
-                                className="btn btn-danger btn-sm"
-                                onClick={() => this.quitarFavorito()}
-                            >
-                                Quitar de favoritos
-                            </button>
-                        ) : (
-                            <button
-                                className="btn btn-outline-danger btn-sm"
-                                onClick={() => this.agregarFavorito()}
-                            >
-                                Agregar a favoritos
-                            </button>
-                        )
+                    {cookies.get("sesion") ? (
+                     <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => this.state.esFavorito ? this.quitarFavorito() : this.agregarFavorito()}
+                        >
+                      {/* Cambio el texto del botón según si ya es favorito o no */}
+                    {this.state.esFavorito ? "Quitar de favoritos" : "Agregar a favoritos"}
+                    </button>
                     ) : null}
                 </div>
             </article>

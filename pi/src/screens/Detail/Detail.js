@@ -55,10 +55,6 @@ class Detail extends Component {
                         {/* genres es un array de objetos, uno con join para mostrarlo */}
                         {genres ? <p>{genres.map(g => g.name).join(", ")}</p> : null}
 
-                        {/* Favoritos solo si existe la cookie de sesión - punto 7 consigna */}
-                        {document.cookie.includes("sesion=") ? (
-                            <button className="btn alert-primary">🩶 Agregar a favoritos</button>
-                        ) : null}
                     </div>
                 </article>
             </section>
