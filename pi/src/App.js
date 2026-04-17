@@ -9,11 +9,12 @@ import { Switch, Route } from "react-router-dom";
 import TVShows from "./screens/TVShows/TVShows";
 import Search from "./screens/Search/Search"
 import Favorites from "./screens/Favorites/Favorites"
+import Register from "./screens/Register/Register"
 
 function App() {
     return (
         <React.Fragment>
-            <Header title="UdeSA Movies" />
+            <Header title="Pochocleados" />
             <Switch>
                 <Route path="/" exact={true} component={Home} />
                 <Route path="/movies" component={Movies} />
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/series" component={TVShows} />
                 <Route path="/search/:type/:query" component={Search} />
                 <Route path="/favorites" component={Favorites} />
+                <Route path="/register" component={Register} />
                 <Route path="*" component={NotFound} />
             </Switch>
             <Footer />
