@@ -16,7 +16,7 @@ class CardsSection extends Component {
                             key={item.id + index}
                             data={item}
                             cardClass={this.props.cardClass}
-                            type = {this.props.idSection =="movies" ? "movie" : "tv"}
+                            type = {this.props.idSection === "movies" ? "movie" : "tv"}
                         />
                     ))}
                 </section>
