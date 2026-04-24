@@ -19,8 +19,20 @@ nav {
     font-weight: bold;
 }
 
-@media(min-width: 765px){
-    nav {
-        grid-template-columns: 1fr;
+/* En celular los links se muestran en columna */
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+    }
+
+    .nav-item {
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 10px 0;
+        border-bottom: 1px solid #ccc;
     }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
+import "../FormRegister/Form.css"
 
 class FormLogin extends Component {
     constructor(props) {
@@ -63,6 +64,8 @@ class FormLogin extends Component {
 
     render() {
         return (
+
+            <div className="form-container">
             <form onSubmit={(evento) => this.enviarFormulario(evento)}>
                 <div className="mb-3">
                     <label>Email:</label>
@@ -94,6 +97,7 @@ class FormLogin extends Component {
                     <p className="text-danger mt-3">{this.state.error}</p>
                 ) : null}
             </form>
+            </div>
         );
     }
 }

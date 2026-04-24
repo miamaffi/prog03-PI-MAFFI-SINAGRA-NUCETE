@@ -58,7 +58,7 @@ class Movies extends Component {
             <>
                 <h2 className="alert alert-primary">Películas populares</h2>
 
-                {/* Filtro de contenido ya cargado - punto 6 consigna */}
+                {/* Filtro de contenido ya cargado */}
                 <form className="filter-form">
                     <input
                         type="text"

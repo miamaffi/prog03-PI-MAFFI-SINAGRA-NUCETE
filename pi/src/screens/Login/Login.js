@@ -5,7 +5,7 @@ class Login extends Component {
     render() {
         return (
             <>
-            <h2 className="container mt-4"> Login </h2>
+            <h2 className="alert alert-primary"> Login </h2>
             {/* Le paso history para que el FormLogin pueda redirigir al home*/}
                 <FormLogin history={this.props.history} />
             </>

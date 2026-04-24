@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
+import "./Form.css";
 
 const cookies = new Cookies();
 
@@ -31,6 +32,11 @@ class FormRegister extends Component {
             return;
         }
 
+        if (this.state.email.length < 6) {
+            this.setState({ error: "Debe ingresar un correo electrónico válido" });
+            return;
+        }
+
         let usersStorage = localStorage.getItem("users");
 
         if (usersStorage !== null) {
@@ -53,11 +59,13 @@ class FormRegister extends Component {
         }
 
         cookies.set("sesion", this.state.email, { path: "/" });
-        this.props.history.push("/login");
+        this.props.history.push("/");
     }
     
     render() {
         return (
+        
+            <div className="form-container"  >
             <form onSubmit={(evento) => this.onSubmit(evento)}>
                 {this.state.error !== "" ? (
                     <p className="alert alert-danger">{this.state.error}</p>
@@ -83,6 +91,7 @@ class FormRegister extends Component {
                     Crear cuenta
                 </button>
             </form>
+            </div>
         );
     }
 }

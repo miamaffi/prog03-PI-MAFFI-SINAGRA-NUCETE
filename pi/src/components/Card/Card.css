@@ -53,3 +53,27 @@
 .oculta {
     display: none;
 }
+
+/* Tablets */
+@media (max-width: 768px) {
+    .single-card-movie,
+    .single-card-playing,
+    .single-card-tv,
+    .single-card-people,
+    .single-card-on-air,
+    .all-movies .single-card-movie {
+        width: 48%;
+    }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+    .single-card-movie,
+    .single-card-playing,
+    .single-card-tv,
+    .single-card-people,
+    .single-card-on-air,
+    .all-movies .single-card-movie {
+        width: 100%;
+    }
+}

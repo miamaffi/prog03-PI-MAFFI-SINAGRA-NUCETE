@@ -23,9 +23,9 @@ class Search extends Component {
             .then(res => res.json())
             .then(data => {
                 // Agrego el type para que el link al detalle funcione
-                let resultados = data.results.map(movie => {
-                    movie.type = "movie";
-                    return movie;
+                let resultados = data.results.map(item => {
+                    item.type = type;
+                    return item;
                 });
                 this.setState({
                     results: resultados,

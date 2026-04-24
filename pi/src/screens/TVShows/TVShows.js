@@ -73,7 +73,7 @@ class TVShows extends Component {
                         <section className="cards all-movies">
                             {showsFiltrados.map((show, index) => (
                                 <Card
-                                    key={show.id + index}
+                                    key={show.name + index}
                                     data={show}
                                     cardClass="single-card-tv"
                                     type = "tv"
