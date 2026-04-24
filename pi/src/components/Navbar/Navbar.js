@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie"
 import "./Navbar.css";
 
 class Navbar extends Component {
     render() {
+        const cookies = new Cookies();
+        const sesion = cookies.get("session");
+        
         return (
             <nav>
                 <ul className="nav nav-tabs my-4">
@@ -18,7 +22,6 @@ class Navbar extends Component {
                     <li className="nav-item">
                         <Link className="nav-link" to="/series">Series</Link>
                     </li>
-
                     <li className="nav-item">
                         <Link className="nav-link" to="/favorites">Favoritas</Link>
                     </li>

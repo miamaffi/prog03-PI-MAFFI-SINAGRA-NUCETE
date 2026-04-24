@@ -10,6 +10,7 @@ import TVShows from "./screens/TVShows/TVShows";
 import Search from "./screens/Search/Search"
 import Favorites from "./screens/Favorites/Favorites"
 import Register from "./screens/Register/Register"
+import Login from "./screens/Login/Login"
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/search/:type/:query" component={Search} />
                 <Route path="/favorites" component={Favorites} />
                 <Route path="/register" component={Register} />
+                <Route path="/login" component={Login} />
                 <Route path="*" component={NotFound} />
             </Switch>
             <Footer />
