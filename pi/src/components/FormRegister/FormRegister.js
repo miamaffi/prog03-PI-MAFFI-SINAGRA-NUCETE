@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 class FormRegister extends Component {
     constructor(props) {
@@ -49,10 +52,10 @@ class FormRegister extends Component {
             localStorage.setItem("users", usersEnJson);
         }
 
-        document.cookie = "sesion=" + this.state.email;
+        cookies.set("sesion", this.state.email, { path: "/" });
         this.props.history.push("/login");
     }
-
+    
     render() {
         return (
             <form onSubmit={(evento) => this.onSubmit(evento)}>
