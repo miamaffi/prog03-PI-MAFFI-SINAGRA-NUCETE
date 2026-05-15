@@ -1,19 +1,17 @@
-import React, { Component } from "react";
+import React, {components} from "react";
 import Navbar from "../Navbar/Navbar";
 import "./Header.css";
 
-class Header extends Component {
-    render() {
+function Header(props) {
         return (
             <header>
                 <img src="/LogoPochocleados.png" alt="Pochocleados" className="logo" />
-                <h1>{this.props.title}</h1>
+                <h1>{props.title}</h1>
                 
                 <Navbar />
             </header>
         );
     }
-}
 
 
 

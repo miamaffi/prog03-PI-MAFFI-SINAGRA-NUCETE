@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import Cookies from "universal-cookie";
 import "../FormRegister/Form.css"
 
-class FormLogin extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+function FormLogin(props) {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState()
+            state = {
             email: "",
             password: "",
             error: ""

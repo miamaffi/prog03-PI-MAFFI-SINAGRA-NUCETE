@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import "./Navbar.css";
 
-class Navbar extends Component {
-    render() {
+function Navbar() {
         const cookies = new Cookies();
         const sesion = cookies.get("sesion");
 
@@ -38,6 +37,5 @@ class Navbar extends Component {
             </nav>
         );
     }
-}
 
 export default Navbar;

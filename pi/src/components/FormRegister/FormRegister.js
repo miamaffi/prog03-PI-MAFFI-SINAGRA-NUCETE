@@ -1,39 +1,44 @@
-import React, { Component } from "react";
+import React from "react";
 import Cookies from "universal-cookie";
 import "./Form.css";
 
 const cookies = new Cookies();
 
-class FormRegister extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+function FormRegister(props) { // hereda de component, component es clase padre, form register el hijo
+     const [email, setEmail] = useState("");
+     const [password, setPassword] = useState("");
+     const [error, setError] = useState("");
+            state = {
             email: "",
             password: "",
             error: ""
         };
     }
 
-    controlarCambio(evento) {
-        this.setState({ [evento.target.name]: evento.target.value });
+    function controlarCambio(evento) {
+    if (evento.target.name === "email") {
+        setEmail(evento.target.value);
+    } else if (evento.target.name === "password") {
+        setPassword(evento.target.value);
     }
+}
 
-    onSubmit(evento) {
+    onSubmit(evento); {
         evento.preventDefault();
 
         let usuarioACrear = {
-            email: this.state.email,
-            password: this.state.password,
+            email: email,
+            password: password,
             createdAt: Date.now()
         };
 
-        if (this.state.password.length < 6) {
-            this.setState({ error: "La contraseña debe tener mínimo 6 caracteres" });
+        if (password.length < 6) {
+            setError("La contraseña debe tener mínimo 6 caracteres");
             return;
         }
 
-        if (this.state.email.length < 6) {
-            this.setState({ error: "Debe ingresar un correo electrónico válido" });
+        if (email.length < 6) {
+            setError("Debe ingresar un correo electrónico válido");
             return;
         }
 
@@ -42,10 +47,10 @@ class FormRegister extends Component {
         if (usersStorage !== null) {
             let usersParseado = JSON.parse(usersStorage);
 
-            let usersFiltrado = usersParseado.filter((user) => user.email === this.state.email);
+            let usersFiltrado = usersParseado.filter((user) => user.email === email);
 
             if (usersFiltrado.length > 0) {
-                this.setState({ error: "Ya existe un usuario con el email ingresado" });
+                setError("Ya existe un usuario con el email ingresado");
                 return;
             } else {
                 usersParseado.push(usuarioACrear);
@@ -58,33 +63,32 @@ class FormRegister extends Component {
             localStorage.setItem("users", usersEnJson);
         }
 
-        cookies.set("sesion", this.state.email, { path: "/" });
-        this.props.history.push("/");
+        cookies.set("sesion", email, { path: "/" });
+        props.history.push("/");
     }
     
-    render() {
         return (
         
             <div className="form-container"  >
-            <form onSubmit={(evento) => this.onSubmit(evento)}>
-                {this.state.error !== "" ? (
-                    <p className="alert alert-danger">{this.state.error}</p>
+            <form onSubmit={(evento) => onSubmit(evento)}>
+                {error !== "" ? (
+                    <p className="alert alert-danger">{error}</p>
                 ) : null}
 
                 <input
                     type="email"
                     name="email"
                     placeholder="Email"
-                    value={this.state.email}
-                    onChange={(evento) => this.controlarCambio(evento)}
+                    value={email}
+                    onChange={(evento) => controlarCambio(evento)}
                 />
 
                 <input
                     type="password"
                     name="password"
                     placeholder="Contraseña"
-                    value={this.state.password}
-                    onChange={(evento) => this.controlarCambio(evento)}
+                    value={password}
+                    onChange={(evento) => controlarCambio(evento)}
                 />
 
                 <button type="submit" className="btn btn-primary">
@@ -93,7 +97,6 @@ class FormRegister extends Component {
             </form>
             </div>
         );
-    }
-}
+    
 
 export default FormRegister;
