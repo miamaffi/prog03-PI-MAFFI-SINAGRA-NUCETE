@@ -1,79 +1,77 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Cookies from "universal-cookie";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "../FormRegister/Form.css"
+
+        // Creo la cookie de sesión
+        const cookies = new Cookies();
+        cookies.set("sesion", email);
 
 function FormLogin(props) {
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState()
-            state = {
-            email: "",
-            password: "",
-            error: ""
-        };
-    }
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState("")
+    const history = useHistory();
 
-    controlarCambios(evento) {
-        this.setState({
-            [evento.target.name]: evento.target.value
-        });
-    }
 
-    enviarFormulario(evento) {
+    
+
+
+    function controlarCambio(evento) {
+    if (evento.target.name === "email") {
+        setEmail(evento.target.value);
+    } else if (evento.target.name === "password") {
+        setPassword(evento.target.value);
+    }
+}
+
+    function enviarFormulario(evento) {
         evento.preventDefault();
 
         // Recupero los usuarios guardados en localStorage
-        let usersStorage = localStorage.getItem("users");
+        const usersStorage = localStorage.getItem("users");
 
         if (usersStorage === null) {
-            this.setState({
-                error: "Las credenciales ingresadas son inválidas"
-            });
+            setError("Las credenciales ingresadas son inválidas")
             return;
         }
 
         // Parseo el string a array de objetos
-        let usersParseado = JSON.parse(usersStorage);
+        const usersParseado = JSON.parse(usersStorage);
 
         // Busco si existe un usuario con el email ingresado
         let usersFiltrado = usersParseado.filter((user) => {
-            return user.email === this.state.email;
+            return user.email === email;
         });
 
         if (usersFiltrado.length === 0) {
-            this.setState({
-                error: "El usuario ingresado no existe"
-            });
+                setError("El usuario ingresado no existe")
+            };
             return;
         }
 
         // Verifico si la password coincide con la guardada
-        if (usersFiltrado[0].password !== this.state.password) {
-            this.setState({
-                error: "Las credenciales ingresadas son inválidas"
-            });
+        if (usersFiltrado[0].password !== password) {
+            setError("Las credenciales ingresadas son inválidas");
             return;
         }
 
-        // Creo la cookie de sesión
-        const cookies = new Cookies();
-        cookies.set("sesion", this.state.email);
-
         // Redirijo al home
-        this.props.history.push("/");
-    }
+        history.push("/");
+}
+    
 
-    render() {
         return (
 
             <div className="form-container">
-            <form onSubmit={(evento) => this.enviarFormulario(evento)}>
+            <form onSubmit={enviarFormulario}>
                 <div className="mb-3">
                     <label>Email:</label>
                     <input
                         type="email"
                         name="email"
-                        value={this.state.email}
-                        onChange={(evento) => this.controlarCambios(evento)}
+                        value={email}
+                        onChange={controlarCambio}
                         className="form-control"
                     />
                 </div>
@@ -83,8 +81,8 @@ function FormLogin(props) {
                     <input
                         type="password"
                         name="password"
-                        value={this.state.password}
-                        onChange={(evento) => this.controlarCambios(evento)}
+                        value={password}
+                        onChange={controlarCambio}
                         className="form-control"
                     />
                 </div>
@@ -93,13 +91,12 @@ function FormLogin(props) {
                     Iniciar sesión
                 </button>
 
-                {this.state.error !== "" ? (
-                    <p className="text-danger mt-3">{this.state.error}</p>
+                {error !== "" ? (
+                    <p className="text-danger mt-3">{error}</p>
                 ) : null}
             </form>
             </div>
         );
-    }
-}
+
 
 export default FormLogin;

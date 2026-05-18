@@ -1,19 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Cookies from "universal-cookie";
 import "./Form.css";
 
 const cookies = new Cookies();
+const history = useHistory();
 
 function FormRegister(props) { // hereda de component, component es clase padre, form register el hijo
      const [email, setEmail] = useState("");
      const [password, setPassword] = useState("");
      const [error, setError] = useState("");
-            state = {
-            email: "",
-            password: "",
-            error: ""
-        };
-    }
+
 
     function controlarCambio(evento) {
     if (evento.target.name === "email") {
@@ -23,7 +20,7 @@ function FormRegister(props) { // hereda de component, component es clase padre,
     }
 }
 
-    onSubmit(evento); {
+    function onSubmit(evento) {
         evento.preventDefault();
 
         let usuarioACrear = {
@@ -64,8 +61,8 @@ function FormRegister(props) { // hereda de component, component es clase padre,
         }
 
         cookies.set("sesion", email, { path: "/" });
-        props.history.push("/");
-    }
+        history.push("/");
+    
     
         return (
         
@@ -97,6 +94,7 @@ function FormRegister(props) { // hereda de component, component es clase padre,
             </form>
             </div>
         );
-    
+}
+}
 
 export default FormRegister;
