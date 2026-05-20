@@ -1,24 +1,23 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Cookies from "universal-cookie";
 import "./Form.css";
 
 const cookies = new Cookies();
-const history = useHistory();
 
-function FormRegister(props) { // hereda de component, component es clase padre, form register el hijo
-     const [email, setEmail] = useState("");
-     const [password, setPassword] = useState("");
-     const [error, setError] = useState("");
-
+function FormRegister(props) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const history = useHistory();
 
     function controlarCambio(evento) {
-    if (evento.target.name === "email") {
-        setEmail(evento.target.value);
-    } else if (evento.target.name === "password") {
-        setPassword(evento.target.value);
+        if (evento.target.name === "email") {
+            setEmail(evento.target.value);
+        } else if (evento.target.name === "password") {
+            setPassword(evento.target.value);
+        }
     }
-}
 
     function onSubmit(evento) {
         evento.preventDefault();
@@ -62,11 +61,10 @@ function FormRegister(props) { // hereda de component, component es clase padre,
 
         cookies.set("sesion", email, { path: "/" });
         history.push("/");
-    
-    
-        return (
-        
-            <div className="form-container"  >
+    }
+
+    return (
+        <div className="form-container">
             <form onSubmit={(evento) => onSubmit(evento)}>
                 {error !== "" ? (
                     <p className="alert alert-danger">{error}</p>
@@ -92,9 +90,8 @@ function FormRegister(props) { // hereda de component, component es clase padre,
                     Crear cuenta
                 </button>
             </form>
-            </div>
-        );
-}
+        </div>
+    );
 }
 
 export default FormRegister;

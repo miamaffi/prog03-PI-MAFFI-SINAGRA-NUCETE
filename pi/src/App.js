@@ -12,6 +12,8 @@ import Favorites from "./screens/Favorites/Favorites"
 import Register from "./screens/Register/Register"
 import Login from "./screens/Login/Login"
 
+
+
 function App() {
     return (
         <React.Fragment>

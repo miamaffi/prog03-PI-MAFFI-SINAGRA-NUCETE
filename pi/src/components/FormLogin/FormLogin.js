@@ -1,77 +1,62 @@
 import React, { useState } from "react";
 import Cookies from "universal-cookie";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import "../FormRegister/Form.css"
-
-        // Creo la cookie de sesión
-        const cookies = new Cookies();
-        cookies.set("sesion", email);
+import "../FormRegister/Form.css";
 
 function FormLogin(props) {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [error, setError] = useState("")
-    const history = useHistory();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
-
-    
-
-
-    function controlarCambio(evento) {
-    if (evento.target.name === "email") {
-        setEmail(evento.target.value);
-    } else if (evento.target.name === "password") {
-        setPassword(evento.target.value);
+    function controlarCambios(evento) {
+        if (evento.target.name === "email") {
+            setEmail(evento.target.value);
+        } else if (evento.target.name === "password") {
+            setPassword(evento.target.value);
+        }
     }
-}
 
     function enviarFormulario(evento) {
         evento.preventDefault();
 
-        // Recupero los usuarios guardados en localStorage
-        const usersStorage = localStorage.getItem("users");
+        let usersStorage = localStorage.getItem("users");
 
         if (usersStorage === null) {
-            setError("Las credenciales ingresadas son inválidas")
+            setError("Las credenciales ingresadas son inválidas");
             return;
         }
 
-        // Parseo el string a array de objetos
-        const usersParseado = JSON.parse(usersStorage);
+        let usersParseado = JSON.parse(usersStorage);
 
-        // Busco si existe un usuario con el email ingresado
         let usersFiltrado = usersParseado.filter((user) => {
             return user.email === email;
         });
 
         if (usersFiltrado.length === 0) {
-                setError("El usuario ingresado no existe")
-            };
+            setError("El usuario ingresado no existe");
             return;
         }
 
-        // Verifico si la password coincide con la guardada
         if (usersFiltrado[0].password !== password) {
             setError("Las credenciales ingresadas son inválidas");
             return;
         }
 
-        // Redirijo al home
-        history.push("/");
-}
-    
+        const cookies = new Cookies();
+        cookies.set("sesion", email);
 
-        return (
+        props.history.push("/");
+    }
 
-            <div className="form-container">
-            <form onSubmit={enviarFormulario}>
+    return (
+        <div className="form-container">
+            <form onSubmit={(evento) => enviarFormulario(evento)}>
                 <div className="mb-3">
                     <label>Email:</label>
                     <input
                         type="email"
                         name="email"
                         value={email}
-                        onChange={controlarCambio}
+                        onChange={(evento) => controlarCambios(evento)}
                         className="form-control"
                     />
                 </div>
@@ -82,7 +67,7 @@ function FormLogin(props) {
                         type="password"
                         name="password"
                         value={password}
-                        onChange={controlarCambio}
+                        onChange={(evento) => controlarCambios(evento)}
                         className="form-control"
                     />
                 </div>
@@ -95,8 +80,8 @@ function FormLogin(props) {
                     <p className="text-danger mt-3">{error}</p>
                 ) : null}
             </form>
-            </div>
-        );
-
+        </div>
+    );
+}
 
 export default FormLogin;

@@ -1,65 +1,62 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
-class Detail extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            contenido: null
-        };
-    }
+function Detail(props) {
+    const [contenido, setContenido] = useState(null);
 
-    componentDidMount() {
-        // Tomo el type y el id de la URL, igual que en la práctica con el id del personaje
-        const { type, id } = this.props.match.params;
+    useEffect(() => {
+        const { type, id } = props.match.params;
         const apiKey = "07331310659d2393d5664c23ad6370d3";
 
         fetch(`https://api.themoviedb.org/3/${type}/${id}?api_key=${apiKey}&language=es-ES`)
             .then(res => res.json())
             .then(data => {
-                this.setState({ contenido: data });
+                setContenido(data);
             })
             .catch(error => console.log(error));
+    }, []);
+
+    if (contenido === null) {
+        return <h2>Cargando...</h2>;
     }
 
-    render() {
-        // Mientras no llegaron los datos muestro texto de carga
-        if (this.state.contenido === null) {
-            return <h2>Cargando...</h2>;
-        }
+    const {
+        title, name, overview, poster_path,
+        vote_average, release_date, first_air_date,
+        runtime, genres
+    } = contenido;
 
-        // Las películas tienen "title", las series tienen "name"
-        const {
-            title, name, overview, poster_path,
-            vote_average, release_date, first_air_date,
-            runtime, genres
-        } = this.state.contenido;
-
-        const nombre = title || name;
-        // Las películas tienen release_date, las series tienen first_air_date
-        const fecha = release_date || first_air_date;
-
-        return (
-            <section className="cards">
-                <article className="single-card-movie">
-                    <img
-                        src={`https://image.tmdb.org/t/p/w342${poster_path}`}
-                        alt={nombre}
-                    />
-                    <div className="cardBody">
-                        <h2>{nombre}</h2>
-                        <p> {vote_average}</p>
-                        <p>{fecha}</p>
-                        {/* runtime solo viene en películas, en series no existe */}
-                        {runtime ? <p>⏱ {runtime} min</p> : null}
-                        <p>{overview}</p>
-                        {/* genres es un array de objetos, uno con join para mostrarlo */}
-                        {genres ? <p>{genres.map(g => g.name).join(", ")}</p> : null}
-
-                    </div>
-                </article>
-            </section>
-        );
+    let nombre;
+    if (title) {
+        nombre = title;
+    } else {
+        nombre = name;
     }
+
+    let fecha;
+    if (release_date) {
+        fecha = release_date;
+    } else {
+        fecha = first_air_date;
+    }
+
+    return (
+        <section className="cards">
+            <article className="single-card-movie">
+                <img
+                    src={`https://image.tmdb.org/t/p/w342${poster_path}`}
+                    alt={nombre}
+                />
+                <div className="cardBody">
+                    <h2>{nombre}</h2>
+                    <p>{vote_average}</p>
+                    <p>{fecha}</p>
+                    {runtime ? <p>⏱ {runtime} min</p> : null}
+                    <p>{overview}</p>
+                    {genres ? <p>{genres.map(g => g.name).join(", ")}</p> : null}
+                </div>
+            </article>
+        </section>
+    );
 }
 
 export default Detail;
